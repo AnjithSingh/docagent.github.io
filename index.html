@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocChecker Agent - Smart Document Contradiction Detection</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="app-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <h1 class="app-title">DocChecker Agent</h1>
+                    <p class="app-tagline">Smart Document Contradiction Detection</p>
+                </div>
+                
+                <!-- Usage Dashboard -->
+                <div class="usage-dashboard">
+                    <div class="usage-stats">
+                        <div class="stat-item">
+                            <span class="stat-value" id="docsAnalyzed">0</span>
+                            <span class="stat-label">Documents Analyzed</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="reportsGenerated">0</span>
+                            <span class="stat-label">Reports Generated</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="creditsUsed">$0.00</span>
+                            <span class="stat-label">Credits Used</span>
+                        </div>
+                    </div>
+                    <div class="billing-status">
+                        <div class="status status--success" id="billingStatus">
+                            Flexprice Active
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Integration Status Panel -->
+            <section class="integration-panel">
+                <div class="integration-status">
+                    <div class="integration-item">
+                        <div class="integration-icon">💰</div>
+                        <div class="integration-content">
+                            <h3>Flexprice Integration</h3>
+                            <p class="integration-detail">
+                                $0.50 per document • $2.00 per report
+                                <span class="status-indicator active"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="integration-item">
+                        <div class="integration-icon">👁️</div>
+                        <div class="integration-content">
+                            <h3>Pathway Monitoring</h3>
+                            <p class="integration-detail">
+                                External document tracking active
+                                <span class="status-indicator active"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pathway Alerts -->
+                <div class="pathway-alerts" id="pathwayAlerts">
+                    <h3>Recent External Updates</h3>
+                    <div class="alerts-container" id="alertsContainer">
+                        <!-- Alerts will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- File Upload Section -->
+            <section class="upload-section">
+                <h2>Upload Documents (2-3 files)</h2>
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-content">
+                        <div class="upload-icon">📄</div>
+                        <h3>Drag & Drop Documents Here</h3>
+                        <p>Supported formats: PDF, DOCX, TXT</p>
+                        <button class="btn btn--secondary" id="browseBtn">Browse Files</button>
+                        <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt" style="display: none;">
+                    </div>
+                </div>
+                
+                <!-- Uploaded Files Preview -->
+                <div class="uploaded-files" id="uploadedFiles">
+                    <!-- File cards will be added dynamically -->
+                </div>
+
+                <!-- Upload Controls -->
+                <div class="upload-controls">
+                    <button class="btn btn--outline" id="clearBtn" disabled>Clear All</button>
+                    <button class="btn btn--primary" id="analyzeBtn" disabled>Analyze Documents</button>
+                </div>
+            </section>
+
+            <!-- Analysis Progress Section -->
+            <section class="analysis-section" id="analysisSection" style="display: none;">
+                <div class="analysis-progress">
+                    <h2>Analyzing Documents...</h2>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-steps">
+                            <div class="progress-step active" id="step1">
+                                <div class="step-icon">📖</div>
+                                <span>Parsing documents...</span>
+                            </div>
+                            <div class="progress-step" id="step2">
+                                <div class="step-icon">🔍</div>
+                                <span>Detecting contradictions...</span>
+                            </div>
+                            <div class="progress-step" id="step3">
+                                <div class="step-icon">📊</div>
+                                <span>Generating report...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2>Contradiction Analysis Results</h2>
+                    <div class="results-summary">
+                        <div class="summary-stat">
+                            <span class="summary-value" id="contradictionsFound">0</span>
+                            <span class="summary-label">Contradictions Found</span>
+                        </div>
+                        <div class="summary-breakdown">
+                            <span class="severity-badge severity-high" id="highSeverity">0 High</span>
+                            <span class="severity-badge severity-medium" id="mediumSeverity">0 Medium</span>
+                            <span class="severity-badge severity-low" id="lowSeverity">0 Low</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contradictions List -->
+                <div class="contradictions-list" id="contradictionsList">
+                    <!-- Contradiction cards will be populated by JavaScript -->
+                </div>
+
+                <!-- Generate Report Button -->
+                <div class="report-actions">
+                    <button class="btn btn--primary" id="generateReportBtn">Generate Full Report</button>
+                    <button class="btn btn--secondary" id="newAnalysisBtn">Analyze New Documents</button>
+                </div>
+            </section>
+
+            <!-- Reports Dashboard Section -->
+            <section class="reports-dashboard" id="reportsDashboard" style="display: none;">
+                <h2>Generated Reports</h2>
+                <div class="reports-list" id="reportsList">
+                    <!-- Reports will be populated by JavaScript -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer">
+        <!-- Toasts will be added dynamically -->
+    </div>
+
+    <!-- Report Modal -->
+    <div class="modal hidden" id="reportModal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Document Contradiction Report</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="reportContent">
+                <!-- Report content will be populated -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--outline" id="downloadReport">Download PDF</button>
+                <button class="btn btn--secondary" id="closeReportModal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
